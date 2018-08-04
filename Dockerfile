@@ -8,19 +8,12 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy dependency definitions
-COPY package.json /usr/src/app
+COPY . /usr/src/app
 
 # Install dependecies
-RUN npm install
+RUN yarn
 
 # Get all the code needed to run the app
-COPY .angular-cli.json /usr/src/app
-COPY ./src/app /usr/src/app
-COPY proxy.conf.json /usr/src/app
-COPY tsconfig.json /usr/src/app
-
-RUN mkdir -p /usr/src/app/src
-COPY tsconfig.json /usr/src/app/src/tsconfig.app.json
 
 # Expose the port the app runs in
 EXPOSE 4200

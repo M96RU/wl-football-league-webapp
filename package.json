@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "prestart": "sed -i 's/private classList/classList/g' node_modules/angular2-fontawesome/src/fa.component.d.ts",
-    "start": "ng serve --host 0.0.0.0 --proxy-config proxy.conf.json --aot",
+    "start": "ng serve --host 0.0.0.0 --proxy-config proxy.conf.json --aot --prod",
     "prebuild": "sed -i 's/private classList/classList/g' node_modules/angular2-fontawesome/src/fa.component.d.ts",
     "build": "ng build --prod --aot",
     "test": "ng test",

@@ -1,0 +1,25 @@
+variables:
+  DOCKER_SITE_IMAGE: registry.gitlab.worldline.tech/wl-football-league/wl-football-league-webapp:latest
+
+stages:
+  - package
+  - push
+
+package:
+  stage: package
+  image: node
+  script:
+    - yarn
+    - yarn build
+  artifacts:
+    name: dist
+    paths:
+      - dist/
+
+push:
+  stage: push
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.worldline.tech
+  script:
+    - docker build --pull -t $DOCKER_SITE_IMAGE .
+    - docker push $DOCKER_SITE_IMAGE
