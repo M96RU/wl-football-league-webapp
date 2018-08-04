@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-12 col-lg-6 col-xl-4">
+    <games-planning></games-planning>
+  </div>
+  <div class="col-12 col-lg-6 col-xl-4">
+    <div class="card">
+      <div class="card-body p-0">
+        <user-season-list></user-season-list>
+      </div>
+      <div class="card-header">
+        <h5 class="card-title m-0"><fa name="line-chart"></fa>Hommes en forme (3 mois)</h5>
+      </div>
+      <div class="card-body p-0">
+        <series></series>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 col-xl-4">
+    <div class="card mb-2">
+      <div class="card-header">
+        <h5 class="card-title m-0"><fa name="star"></fa>Baton de JA</h5>
+      </div>
+      <div class="card-body">
+        <baton [baton]="currentBaton" [allGames]="true"></baton>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title m-0"><fa name="bar-chart"></fa>Statistiques (3 mois)</h5>
+      </div>
+      <div class="card-body">
+        <app-stats [gameFilter]="statsFilter"></app-stats>
+      </div>
+    </div>
+  </div>
+</div>

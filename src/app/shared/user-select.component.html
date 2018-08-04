@@ -1,0 +1,4 @@
+<select class="form-control form-control-sm" [(ngModel)]="user" (ngModelChange)="onChange()">
+  <option *ngIf="showAllUsers" [ngValue]="undefined" selected>{{'AllPlayers' | translate}}</option>
+  <option *ngFor="let userOption of users|usersSort" [ngValue]="userOption">{{userOption.firstname}} {{userOption.lastname}}</option>
+</select>

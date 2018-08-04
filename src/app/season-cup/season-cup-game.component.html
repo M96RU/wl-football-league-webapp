@@ -1,0 +1,129 @@
+<div class="h-100 mt-3 mb-3 small" *ngIf="!final && round===1">
+  <div class="text-center" [class.winner]="isWinner(game?.user1)">
+    <user-link [user]="game?.user1" [label]="game?.user1?.getShortName()"></user-link>&nbsp;
+  </div>
+  <div class="row">
+    <div class="w-25 text-right">
+      <app-team-flag [team]="game?.team1" [size]="20"></app-team-flag>
+    </div>
+    <div class="w-50">
+      <season-cup-score [game]="game"></season-cup-score>
+    </div>
+    <div class="w-25 text-left">
+      <app-team-flag [team]="game?.team2" [size]="20"></app-team-flag>
+    </div>
+  </div>
+  <div class="text-center" [class.winner]="isWinner(game?.user2)">
+    <user-link [user]="game?.user2" [label]="game?.user2?.getShortName()"></user-link>&nbsp;
+  </div>
+</div>
+
+<div class="h-100 small d-flex" *ngIf="!final && round===2">
+  <div class="w-100 justify-content-center align-self-center">
+
+    <div class="text-center">
+      <app-team-flag [team]="game?.team1" [size]="33"></app-team-flag>
+    </div>
+    <div class="text-center" [class.winner]="isWinner(game?.user1)">
+      <user-link [user]="game?.user1" [label]="game?.user1?.getShortName()"></user-link>
+    </div>
+    <div class="row">
+      <div class="w-25">&nbsp;</div>
+      <div class="w-50">
+        <season-cup-score [game]="game"></season-cup-score>
+      </div>
+      <div class="w-25">&nbsp;</div>
+    </div>
+    <div class="text-center" [class.winner]="isWinner(game?.user2)">
+      <user-link [user]="game?.user2" [label]="game?.user2?.getShortName()"></user-link>
+    </div>
+    <div class="text-center">
+      <app-team-flag [team]="game?.team2" [size]="33"></app-team-flag>
+    </div>
+  </div>
+</div>
+
+<div class="h-100 small" *ngIf="!final && round>2">
+  <div *ngIf="game" class="h-100">
+
+    <div style="height: 15%">&nbsp;</div>
+
+    <div class="d-flex" style="height: 25%">
+      <div *ngIf="game.user1" class="w-100 justify-content-center align-self-center text-center">
+        <div>
+          <app-team-flag [responsive]="round>3" [team]="game.team1" [size]="60"></app-team-flag>
+        </div>
+        <div [class.winner]="isWinner(game.user1)">
+          <user-link [user]="game.user1"></user-link>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex" style="height: 20%">
+      <div class="w-100 row justify-content-center align-self-center">
+        <div class="w-25 text-right">&nbsp;</div>
+        <div class="w-50">
+          <season-cup-score [game]="game"></season-cup-score>
+        </div>
+        <div class="w-25 text-left">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="d-flex" style="height: 25%">
+      <div *ngIf="game.user2" class="w-100 justify-content-center align-self-center text-center">
+        <div [class.winner]="isWinner(game.user2)">
+          <user-link [user]="game.user2"></user-link>
+        </div>
+        <div>
+          <app-team-flag [responsive]="round>3" [team]="game.team2" [size]="60"></app-team-flag>
+        </div>
+      </div>
+    </div>
+
+    <div style="height: 15%">&nbsp;</div>
+
+  </div>
+</div>
+
+
+<div class="h-100" *ngIf="final && game">
+  <div class="h-25"></div>
+
+  <div class="row h-50">
+    <div class="col align-self-center text-center" *ngIf="game.team1 && game.user1">
+      <app-team-flag [team]="game.team1" [responsive]="true"></app-team-flag>
+      <div [class.winner]="isWinner(game.user1)">
+        <user-link [user]="game.user1"></user-link>
+      </div>
+    </div>
+    <div class="col align-self-center text-center" *ngIf="game.team2 && game.user2">
+      <app-team-flag [team]="game.team2" [responsive]="true"></app-team-flag>
+      <div [class.winner]="isWinner(game.user2)">
+        <user-link [user]="game.user2"></user-link>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-25 final">
+
+    <div class="h-50 w-100 row justify-content-center align-self-center">
+      <season-cup-score class="w-25" [game]="game"></season-cup-score>
+    </div>
+
+    <div class="row h-50" [ngClass]="getWinnerClass()">
+      <div class="w-25"></div>
+      <div class="w-50">
+        <div class="h-50 row">
+          <div class="w-50 upLeft"></div>
+          <div class="w-50 upRight"></div>
+        </div>
+        <div class="h-50 row">
+          <div class="w-50 downLeft"></div>
+          <div class="w-50 downRight"></div>
+        </div>
+      </div>
+      <div class="w-25"></div>
+    </div>
+
+  </div>
+</div>

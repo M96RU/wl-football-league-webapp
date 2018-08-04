@@ -1,0 +1,89 @@
+// Left side - Not played
+div.left div.notplayed div.upLeft {
+  border-top: 4px double #007bff;
+  border-right: 4px double #007bff;
+}
+div.left div.notplayed div.upRight {
+  border-bottom: 4px double #007bff;
+}
+div.left div.notplayed div.downLeft {
+  border-bottom: 4px double #007bff;
+  border-right: 4px double #007bff;
+}
+
+// Left side - Home wins
+div.left div.local div.upLeft {
+  border-top: 4px solid #007bff;
+  border-right: 4px solid #007bff;
+}
+div.left div.local div.upRight {
+  border-bottom: 2px solid #007bff;
+}
+div.left div.local div.downRight {
+  border-top: 2px solid #007bff;
+}
+div.left div.local div.downLeft {
+  border-bottom: 4px double #007bff;
+  border-right: 4px double #007bff;
+}
+
+// Left side - Away wins
+div.left div.away div.upLeft {
+  border-top: 4px double #007bff;
+  border-right: 4px double #007bff;
+}
+div.left div.away div.upRight {
+  border-bottom: 2px solid #007bff;
+}
+div.left div.away div.downRight {
+  border-top: 2px solid #007bff;
+}
+div.left div.away div.downLeft {
+  border-bottom: 4px solid #007bff;
+  border-right: 4px solid #007bff;
+}
+
+// Right side - Not played
+div.right div.notplayed div.upRight {
+  border-top: 4px double #007bff;
+  border-left: 4px double #007bff;
+}
+div.right div.notplayed div.upLeft {
+  border-bottom: 4px double #007bff;
+}
+div.right div.notplayed div.downRight {
+  border-bottom: 4px double #007bff;
+  border-left: 4px double #007bff;
+}
+
+// Right side - Home wins
+div.right div.local div.upRight {
+  border-top: 4px solid #007bff;
+  border-left: 4px solid #007bff;
+}
+div.right div.local div.upLeft {
+  border-bottom: 2px solid #007bff;
+}
+div.right div.local div.downLeft {
+  border-top: 2px solid #007bff;
+}
+div.right div.local div.downRight {
+  border-bottom: 4px double #007bff;
+  border-left: 4px double #007bff;
+}
+
+// Right side - Away wins
+div.right div.away div.upRight {
+  border-top: 4px double #007bff;
+  border-left: 4px double #007bff;
+}
+div.right div.away div.upLeft {
+  border-bottom: 2px solid #007bff;
+}
+div.right div.away div.downLeft {
+  border-top: 2px solid #007bff;
+}
+div.right div.away div.downRight {
+  border-bottom: 4px solid #007bff;
+  border-left: 4px solid #007bff;
+}

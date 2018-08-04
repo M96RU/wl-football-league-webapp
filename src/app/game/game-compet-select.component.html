@@ -1,0 +1,4 @@
+<select class="form-control form-control-sm" [(ngModel)]="selectedCompet" (ngModelChange)="onChange()">
+  <option [ngValue]="''">{{'AllCompet' | translate}}</option>
+  <option *ngFor="let compet of compets" [ngValue]="compet">{{compet | translate}}</option>
+</select>

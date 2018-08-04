@@ -1,0 +1,4 @@
+<select class="form-control form-control-sm" [(ngModel)]="season" (ngModelChange)="onChange()">
+  <option *ngIf="showAllSeasons" [ngValue]="undefined" selected>{{'AllSeasons' | translate}}</option>
+  <option *ngFor="let seasonOpt of seasons" [ngValue]="seasonOpt">Saison {{seasonOpt.id}}</option>
+</select>

@@ -1,0 +1,57 @@
+@import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
+
+.score {
+  flex: 0 0 42px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 3px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: $gray-400;
+  height: 20px;
+}
+
+// Final - Not played
+div.final div.notplayed div.upLeft {
+  border-left: 4px double #007bff;
+  border-bottom: 4px double #007bff;
+}
+div.final div.notplayed div.upRight {
+  border-right: 4px double #007bff;
+  border-bottom: 4px double #007bff;
+}
+div.final div.notplayed div.downLeft {
+  border-right: 4px double #007bff;
+}
+
+// Final - Home wins
+div.final div.local div.upLeft {
+  border-left: 4px solid #007bff;
+  border-bottom: 4px solid #007bff;
+}
+div.final div.local div.upRight {
+  border-right: 4px double #007bff;
+  border-bottom: 4px double #007bff;
+}
+div.final div.local div.downLeft {
+  border-right: 2px solid #007bff;
+}
+div.final div.local div.downRight {
+  border-left: 2px solid #007bff;
+}
+
+// Final - Away wins
+div.final div.away div.upLeft {
+  border-left: 4px double #007bff;
+  border-bottom: 4px double #007bff;
+}
+div.final div.away div.upRight {
+  border-right: 4px solid #007bff;
+  border-bottom: 4px solid #007bff;
+}
+div.final div.away div.downLeft {
+  border-right: 2px solid #007bff;
+}
+div.final div.away div.downRight {
+  border-left: 2px solid #007bff;
+}

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-12 col-lg-6 col-xl-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="row justify-content-center">
+          <div class="col text-right">
+            <user-select [(user)]="user1" [users]="users" [showAllUsers]="false" (userChange)="updateNavigation()"></user-select>
+            <serie-matchs [serie]="serie1" [popupPlacement]="'bottom'" *ngIf="serie1"></serie-matchs>
+          </div>
+          <div [style.width.px]="100" class="text-center">
+            vs
+          </div>
+          <div class="col">
+            <user-select [(user)]="user2" [users]="users" [showAllUsers]="false" (userChange)="updateNavigation()" ></user-select>
+            <serie-matchs [serie]="serie2" [popupPlacement]="'bottom'" *ngIf="serie2"></serie-matchs>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <season-select [seasons]="seasonService.getSeasons() | async" [(season)]="selectedSeason" (seasonChange)="seasonUpdated()"></season-select>
+        <div class="form-check">
+          <label translate class="form-check-label">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="headToHead" (ngModelChange)="headToHeadUpdated()">
+            headToHeadOnly
+          </label>
+        </div>
+        <div *ngFor="let stat of statsOpts" class="row justify-content-center align-items-center statRow mb-2">
+          <div class="col text-right">
+            <span class="badge badge-default" [class.badge-success]="isBest(1, stat.key, stat.best)" *ngIf="user1Stats">{{user1Stats[stat.key]}}</span>
+          </div>
+          <div [style.width.px]="100" class="text-center statName">
+            {{'stats.' + stat.key | translate}}
+          </div>
+          <div class="col">
+            <span class="badge badge-default" [class.badge-success]="isBest(2, stat.key, stat.best)" *ngIf="user2Stats">{{user2Stats[stat.key]}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 col-xl-4">
+    <div class="card" *ngIf="gameQuery">
+      <div class="card-header">
+        <h5><fa [name]="'calendar'"></fa>Historique</h5>
+      </div>
+      <div class="card-body">
+        <game-list [query]="gameQuery" [emptyText]="'Aucun match'"></game-list>
+      </div>
+    </div>
+  </div>
+</div>

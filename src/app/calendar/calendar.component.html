@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-12 col-lg-6 col-xl-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="float-right">
+          <div class="input-group">
+            <p-calendar [(ngModel)]="date" [showTime]="true" [locale]="calendar_fr"
+                        [dateFormat]="calendar_dateFormat"></p-calendar>
+            <span class="input-group-btn">
+              <button class="btn btn-primary btn-sm" type="button" (click)="createTimeslot()">Créer</button>
+            </span>
+          </div>
+        </div>
+        <h5>Calendrier des matchs</h5>
+      </div>
+      <div *ngFor="let day of timeslotsDays">
+        <div class="card-header card-header-compact">
+          <h6>{{day | date:'EEEE dd/MM/yy' | capitalize}}</h6>
+        </div>
+        <div class="card-body p-0">
+          <ul class="list-group">
+            <li *ngFor="let timeslot of timeslotsPerDay.get(day); trackBy: trackById" [class.active]="timeslot.id === selectedTimeslot?.id"
+                class="list-group-item list-group-item-action"
+                (click)="timeslotSelected(timeslot)">
+              <div class="d-flex justify-content-between w-100">
+                <div>
+                  <div>
+                    {{timeslot.date | date:'HH:mm'}}
+                  </div>
+                  <div>
+                    <fa *ngIf="authenticatedUser?.admin" name="trash" (click)="deleteTimeslot(timeslot.id)"
+                        ngbTooltip="Supprimer"></fa>
+                    <fa *ngIf="currentUser && isAvailable(currentUser, timeslot)" name="check" [fw]="true" class="text-success" ngbTooltip="Disponible"
+                        (click)="declareAvailable(currentUser.id, timeslot, false); $event.stopPropagation(); false"></fa>
+                    <fa *ngIf="currentUser && !isAvailable(currentUser, timeslot)" name="times" [fw]="true" class="text-danger" ngbTooltip="Non Disponible"
+                        (click)="declareAvailable(currentUser.id, timeslot, true); $event.stopPropagation(); false">></fa>
+                  </div>
+                </div>
+                <div class="flex-1-1-auto">
+                  <div *ngFor="let game of plannedGames.get(timeslot.date.toISOString()); trackBy: trackById">
+                    <app-game-entry [game]="game" [highlightedUserId]="currentUser?.id"></app-game-entry>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 col-xl-4">
+    <div class="card" *ngIf="selectedTimeslot">
+      <div class="card-header">
+        <div class="d-flex flex-wrap justify-content-between">
+          <h5>{{selectedTimeslot.date | date:'EEEE dd/MM/yy HH:mm' | capitalize}}</h5>
+          <div *ngIf="currentUser" [(ngModel)]="available" class="btn-group"
+               (ngModelChange)="declareAvailable(currentUser.id, selectedTimeslot, available)"
+               ngbRadioGroup [disabled]="!adminOrCurrentUser">
+            <label ngbButtonLabel class="btn btn-sm m-0" [class.btn-success]="available" [class.btn-outline-dark]="!available">
+              <input ngbButton type="radio" [value]="true"/>Disponible
+            </label>
+            <label ngbButtonLabel class="btn btn-sm m-0" [class.btn-danger]="!available" [class.btn-outline-dark]="available">
+              <input ngbButton type="radio" [value]="false"/>Non disponible
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="d-flex flex-wrap justify-content-center">
+          <button class="btn btn-outline-dark btn-sm m-1" *ngFor="let user of availableUsers; trackBy: trackById">
+            <span (click)="selectUser(user)">{{ user | userName}}</span>
+            <fa *ngIf="authenticatedUser?.admin" name="trash"
+                (click)="declareAvailable(user.id, selectedTimeslot, false)" ngbTooltip="Rendre non disponible"></fa>
+          </button>
+        </div>
+        <div *ngIf="availableUsers?.length == 0" class="text-center">
+          <em>Aucun joueur disponible</em>
+        </div>
+      </div>
+      <div class="card-header card-header-compact" *ngIf="authenticatedUser">
+        <h5>Mes adversaires disponibles <fa name="question-circle" ngbTooltip="Matchs dont mon adversaire est disponible (indépendamment de ma disponibilité)"></fa></h5>
+      </div>
+      <div class="card-body" *ngIf="authenticatedUser">
+        <div *ngFor="let game of opponentAvailableGames; trackBy: trackById">
+          <div class="d-flex align-items-start mb-1">
+            <app-game-entry [game]="game" class="flex-1-1-auto"></app-game-entry>
+            <button class="btn btn-sm btn-outline-primary" (click)="plan(game, selectedTimeslot)">Planifier</button>
+          </div>
+        </div>
+        <div *ngIf="opponentAvailableGames?.length == 0" class="text-center">
+          <em>Aucun adversaire disponible</em>
+        </div>
+      </div>
+      <div class="card-header card-header-compact">
+        <h5>Deux joueurs disponibles <fa name="question-circle" ngbTooltip="Tous les matchs dont les deux joueurs sont disponibles"></fa></h5>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let game of bothAvailableGames; trackBy: trackById">
+          <div class="d-flex align-items-start mb-1">
+            <app-game-entry [game]="game" class="flex-1-1-auto"></app-game-entry>
+            <button class="btn btn-sm btn-outline-primary" (click)="plan(game, selectedTimeslot)">Planifier</button>
+          </div>
+        </div>
+        <div *ngIf="bothAvailableGames?.length == 0" class="text-center">
+          <em>Aucun match avec 2 joueurs disponibles</em>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="!selectedTimeslot">
+      <div class="card-header">
+        <h5>Aucun créneau sélectionné</h5>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6 col-xl-4" *ngIf="currentUser">
+    <div class="card">
+      <div class="card-header">
+        <h5>Tous mes matchs à planifier</h5>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let game of userToPlanGames; trackBy: trackById" class="d-flex align-items-start mb-1">
+          <app-game-entry [game]="game" class="flex-1-1-auto"></app-game-entry>
+          <button *ngIf="selectedTimeslot" class="btn btn-sm btn-outline-primary" (click)="plan(game, selectedTimeslot)">Planifier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

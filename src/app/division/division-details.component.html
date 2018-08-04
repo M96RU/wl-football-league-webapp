@@ -1,0 +1,27 @@
+<div ngbDropdown class="d-inline-block">
+  <button class="btn btn-outline-primary" id="divisionsDropdown" ngbDropdownToggle>Division {{division}}</button>
+  <div ngbDropdownMenu aria-labelledby="divisionsDropdown">
+    <button *ngFor="let divisionLoopId of divisions" class="dropdown-item" [routerLink]="['../', divisionLoopId]">Division {{divisionLoopId}}</button>
+  </div>
+</div>
+<div *ngIf="authenticatedUser && authenticatedUser.admin" class="btn-group pull-right">
+  <button type="button" class="btn btn-outline-danger" (click)="generateGames()" ngbTooltip="Générer les matchs">Générer les matchs</button>
+</div>
+<div *ngIf="season" class="row mt-1">
+  <div class="col-12 col-lg-5">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title m-0">
+          <fa [name]="'sort-amount-desc'"></fa>
+          Division {{division}}
+        </h5>
+      </div>
+      <div class="card-body p-0">
+        <division-ranking [division]="division" [season]="season"></division-ranking>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-7">
+    <games-planning [seasonId]="season.id" [divisionId]="division"></games-planning>
+  </div>
+</div>

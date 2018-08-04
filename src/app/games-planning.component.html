@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-header">
+    <div class="float-right">
+      <size-select class="compact" [(size)]="lastResultsSize"></size-select>
+    </div>
+    <h5 class="card-title m-0"><fa [name]="'calendar'"></fa>Derniers résultats</h5>
+  </div>
+  <div class="card-body">
+    <game-list [query]="{ status: 'PLAYED', sort: 'date,desc', size: lastResultsSize, user: userId, season: seasonId, division: divisionId }" [highlightedUserId]="userId" [emptyText]="'Aucun match'">
+    </game-list>
+  </div>
+  <div class="card-header card-header-compact">
+    <div class="float-right">
+      <size-select class="compact" [(size)]="comingNextSize"></size-select>
+    </div>
+    <h5 class="card-title m-0">Prochains matchs</h5>
+  </div>
+  <div class="card-body">
+    <game-list [query]="{ status: 'PLANNED', sort: 'date,asc', size: comingNextSize, user: userId, season: seasonId, division: divisionId }" [emptyText]="'Aucun match planifié'"></game-list>
+  </div>
+  <div class="card-header card-header-compact">
+    <div class="float-right">
+      <size-select class="compact" [(size)]="toPlanSize"></size-select>
+    </div>
+    <h5 class="card-title m-0">A planifier</h5>
+  </div>
+  <div class="card-body">
+    <game-list [query]="{ status: 'INIT', sort: 'compet,asc' , sort2: 'day,asc', size: toPlanSize, user: userId, season: seasonId, division: divisionId }" [emptyText]="'Aucun match à planifier'"></game-list>
+  </div>
+</div>

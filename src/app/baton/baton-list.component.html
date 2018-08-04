@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item">
+            <a [class.active]="sort === 'wonDate,desc'" role="button" class="nav-link" (click)="updateSort('wonDate,desc')">
+              Historique
+            </a>
+          </li>
+          <li class="nav-item">
+            <a [class.active]="sort === 'sinceGames,desc'" role="button" class="nav-link" (click)="updateSort('sinceGames,desc')">
+              Meilleure série
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body p-0">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Joueur</th>
+            <th>Gagné le</th>
+            <th>Série</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let baton of batons; trackBy: trackById" [class.table-success]="selectedBaton?.id === baton.id"
+              role="button" (click)="selectedBaton = baton">
+            <td>
+              {{baton.user | userName}} <fa *ngIf="baton.lostDate === null" name="star" ngbTooltip="Baton courant"></fa>
+            </td>
+            <td>
+              {{baton.wonDate | date:'dd/MM/yy HH:mm'}}
+              <span *ngIf="baton.forced">(Forcé)</span>
+            </td>
+            <td>
+              {{baton.sinceGames}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title m-0">Détails du Baton</h5>
+      </div>
+      <div class="card-body">
+        <baton [baton]="selectedBaton" [allGames]="true"></baton>
+      </div>
+    </div>
+  </div>
+</div>
+
+

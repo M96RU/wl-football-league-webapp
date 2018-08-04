@@ -1,0 +1,50 @@
+@import '~bootstrap/scss/functions', '~bootstrap/scss/variables';
+
+.game-entry {
+  //min-width: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+
+  &.game-entry-details {
+    font-size: 0.8rem;
+  }
+}
+
+.score {
+  flex: 0 0 42px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 3px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: $gray-400;
+
+  .PLAYED & {
+    background-color: mix($blue,white, 25%);
+  }
+
+}
+
+.name {
+  flex: 1;
+  overflow: hidden;
+}
+
+.name1 {
+  text-align: right;
+}
+
+.name2 {
+  text-align: left;
+}
+
+.winner {
+  font-weight: bold;
+}
+
+.highlight {
+  a {
+    background-color: mix($success, white, 50%);
+  }
+}

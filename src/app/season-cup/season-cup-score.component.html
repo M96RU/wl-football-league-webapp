@@ -1,0 +1,10 @@
+<ng-template #resultModal>
+  <app-game-result [game]="game" (onGameUpdated)="onGameUpdated()"></app-game-result>
+</ng-template>
+
+<div *ngIf="game" class="score" (click)="open(resultModal)" ngbTooltip="Détails du match">
+  <div *ngIf="game.status === gameStatus.PLAYED; else notPlayed;">
+    {{game.score1 + game.prolongation1}} - {{game.score2 + game.prolongation2}}
+  </div>
+  <ng-template #notPlayed>{{game.date ? (game.date|date:'dd/MM'):"&nbsp;"}}</ng-template>
+</div>

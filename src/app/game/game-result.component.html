@@ -1,0 +1,57 @@
+<div class="modal-header h5">
+  <div class="user1">
+    <a *ngIf="game.user1" routerLink="/users/{{game.user1.id}}" class="link-unstyled">
+      {{game.user1 | userName}}
+      <app-team-flag [team]="game.team1" [size]="60"></app-team-flag>
+    </a>
+    <em *ngIf="!game.user1">{{'userUnknown' | translate}}</em>
+  </div>
+  <div class="middle"><span class="text-center">vs</span></div>
+  <div class="user2">
+    <a *ngIf="game.user2" routerLink="/users/{{game.user2.id}}" class="link-unstyled">
+      <app-team-flag [team]="game.team2" [size]="60"></app-team-flag>
+      {{game.user2 | userName}}
+    </a>
+    <em *ngIf="!game.user2">{{'userUnknown' | translate}}</em>
+  </div>
+</div>
+<div class="modal-header game-date">
+  <div [ngSwitch]="game.compet">
+    {{game.compet | translate}}
+    <span *ngSwitchCase="gameCompet.CUP"> - {{game.round | cupRoundName:game.season.cup}}</span>
+    <span *ngSwitchCase="gameCompet.LEAGUE"> D{{game.round}} - J{{game.day}}</span>
+    - {{game.status | translate}} -
+    <div class="d-inline-block" ngbDropdown (openChange)="loadAvailableTimeslots($event)">
+      <button class="btn btn-sm btn-outline-dark" id="timeslotsDropdown" ngbDropdownToggle>{{gameResult.date | date:'EEE dd/MM/yy HH:mm'}}</button>
+      <div ngbDropdownMenu aria-labelledby="timeslotsDropdown">
+        <button *ngIf="!availableTimeslots" class="dropdown-item">Chargement en cours...</button>
+        <button *ngFor="let timeslot of availableTimeslots" class="dropdown-item" (click)="gameResult.date = timeslot.date">{{timeslot.date | date:'EEE dd/MM/yy HH:mm' | capitalize}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+  <div class="resultRow">
+    <div class="user1"><input [(ngModel)]="gameResult.score1" type="number" class="form-control"/></div>
+    <div class="middle">Buts</div>
+    <div class="user2"><input [(ngModel)]="gameResult.score2" type="number" class="form-control"/></div>
+  </div>
+  <div class="resultRow" *ngIf="game.compet === gameCompet.CUP && gameResult.score1 != null && gameResult.score1 === gameResult.score2">
+    <div class="user1"><input [(ngModel)]="gameResult.prolongation1" type="number" class="form-control"/></div>
+    <div class="middle">Prolongation</div>
+    <div class="user2"><input [(ngModel)]="gameResult.prolongation2" type="number" class="form-control"/></div>
+  </div>
+  <div class="resultRow" *ngIf="game.compet === gameCompet.CUP && gameResult.score1 != null && gameResult.score1 === gameResult.score2 && gameResult.prolongation1 != null && gameResult.prolongation1 === gameResult.prolongation2">
+    <div class="user1"><input [(ngModel)]="gameResult.tab1" type="number" class="form-control"/></div>
+    <div class="middle">Tirs aux buts</div>
+    <div class="user2"><input [(ngModel)]="gameResult.tab2" type="number" class="form-control"/></div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div *ngIf="authenticatedUser" class="btn-group mr-auto">
+    <button *ngIf="authenticatedUser.admin" type="button" class="btn btn-outline-danger" (click)="cancel()" ngbTooltip="Annule définitivement le match (non réversible)">Annuler</button>
+    <button type="button" class="btn btn-outline-warning" (click)="reset()" ngbTooltip="Supprime la planification et tout score saisi (non réversible)" container="body">Réinitialiser</button>
+  </div>
+  <a *ngIf="game.user1 && game.user2" class="btn btn-outline-dark" role="button" [routerLink]="'/comparison'" [queryParams]="{ 'user1': game.user1.id, 'user2': game.user2.id }"><fa [name]="'handshake-o'"></fa>Statistiques</a>
+  <button *ngIf="authenticatedUser" type="button" class="btn btn-primary" (click)="save()">Valider</button>
+</div>

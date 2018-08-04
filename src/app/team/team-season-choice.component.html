@@ -1,0 +1,10 @@
+<div *ngIf="team?.id" class="text-center">
+  <app-team-flag [team]="team" [size]="60"></app-team-flag>
+  <div>
+    {{userSeason.user.firstname}} {{userSeason.user.lastname}}
+  </div>
+  <div class="btn-group" data-toggle="buttons">
+    <button type="button" class="btn btn-danger" (click)="cancelChoice()">Annuler</button>
+    <button type="button" class="btn btn-success" (click)="confirmChoice()">Confirmer</button>
+  </div>
+</div>

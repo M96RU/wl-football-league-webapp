@@ -1,0 +1,85 @@
+<div class="row">
+
+  <div>
+    <div class="card-header">
+      <h5 class="card-title m-0">
+        <fa name="star"></fa>
+        Liste des équipes
+      </h5>
+    </div>
+    <div class="card-body">
+
+      <table class="table table-sm table-hover m-0">
+        <thead>
+        <tr>
+          <th>Equipe</th>
+          <th>ATT</th>
+          <th>MIL</th>
+          <th>DEF</th>
+          <th>GEN</th>
+          <th>Coach</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let userTeamSeason of userTeamSeasons"
+            [class.table-active]="userTeamSeason.team.id === formTeamSeason?.team?.id || userTeamSeason.team.id == choosenTeam?.team.id"
+            class="clickable-row">
+          <td>
+            <app-team-flag [team]="userTeamSeason.team"></app-team-flag>
+            {{userTeamSeason.team.label}}
+          </td>
+          <td>{{userTeamSeason.teamSeason?.attack}}</td>
+          <td>{{userTeamSeason.teamSeason?.midfield}}</td>
+          <td>{{userTeamSeason.teamSeason?.defence}}</td>
+          <td><strong>{{userTeamSeason.teamSeason?.overall | number : '1.1'}}</strong></td>
+          <td>
+            <span *ngIf="authenticatedUser && authenticatedUser.admin" (click)="teamSeasonSelected(userTeamSeason)"><fa name="cog"></fa></span>
+            <span *ngIf="userTeamSeason.userSeason?.user;else teamSeasonAvailable">{{userTeamSeason.userSeason.user.firstname}} {{userTeamSeason.userSeason.user.lastname}} (D{{userTeamSeason.userSeason.division}})</span>
+            <ng-template #teamSeasonAvailable>
+              <span *ngIf="currentChoice?.division >= userTeamSeason.teamSeason?.division; else teamSeasonReserved">
+                <span *ngIf="currentChoice?.user.id === currentUser?.id" (click)="chooseTeam(userTeamSeason)"><fa name="handshake-o"></fa></span>
+              </span>
+
+            </ng-template>
+            <ng-template #teamSeasonReserved>
+              <span *ngIf="userTeamSeason?.teamSeason">Reservé aux D{{userTeamSeason.teamSeason.division}}</span>
+            </ng-template>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+
+    <div *ngIf="formTeamSeason">
+      <div class="card-header">
+        <h5 class="card-title m-0">
+          <fa name="cog"></fa>
+          Modification
+        </h5>
+      </div>
+      <div class="card-body">
+        <team-season-update [formTeamSeason]="formTeamSeason" (teamSeasonUpdate)="handleTeamSeasonUpdate($event)"></team-season-update>
+      </div>
+    </div>
+
+    <div *ngIf="choosenTeam?.team">
+      <div class="card-header">
+        <h5 class="card-title m-0">
+          <fa name="handshake-o"></fa>
+          Confirmation
+        </h5>
+      </div>
+      <div class="card-body">
+        <team-season-choice [team]="choosenTeam?.team" [userSeason]="currentChoice"
+                            (unselectChoosenTeam)="handleUnselectChoosenTeam($event)"></team-season-choice>
+      </div>
+    </div>
+
+  </div>
+
+  <user-season-list></user-season-list>
+
+</div>

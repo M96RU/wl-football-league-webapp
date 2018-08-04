@@ -1,0 +1,21 @@
+<div>
+  <form [formGroup]="userCreateForm" (ngSubmit)="doCreateUser(userCreateForm.value)">
+    <div class="form-group">
+      <input class="form-control col-12 col-md-12" type="text" placeholder="User DAS" [formControl]="userCreateForm.controls['das']">
+      <div *ngIf="userCreateForm.controls['das'].touched && userCreateForm.controls['das'].invalid" class="alert alert-danger">Au moins 5 charactères.</div>
+    </div>
+    <div class="form-group">
+      <input class="form-control col-12 col-md-12" type="text" placeholder="User firstname" [formControl]="userCreateForm.controls['firstname']">
+      <div *ngIf="userCreateForm.controls['firstname'].touched && userCreateForm.controls['firstname'].invalid" class="alert alert-danger">Champ obligatoire.</div>
+    </div>
+    <div class="form-group">
+      <input class="form-control col-12 col-md-12" type="text" placeholder="User lastname" [formControl]="userCreateForm.controls['lastname']">
+      <div *ngIf="userCreateForm.controls['lastname'].touched && userCreateForm.controls['lastname'].invalid" class="alert alert-danger">Champ obligatoire.</div>
+    </div>
+    <div class="form-group">
+      <input class="form-control col-12 col-md-12" type="email" placeholder="User email" [formControl]="userCreateForm.controls['email']">
+      <div *ngIf="userCreateForm.controls['email'].touched && userCreateForm.controls['email'].invalid" class="alert alert-danger">Format username@email.pt</div>
+    </div>
+    <button type="submit" class="btn btn-primary col-12 col-md-12" [disabled]="!userCreateForm.valid">Ajouter</button>
+  </form>
+</div>

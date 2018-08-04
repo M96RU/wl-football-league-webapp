@@ -1,0 +1,38 @@
+<ng-template #resultModal>
+  <app-game-result [game]="game" (onGameUpdated)="onGameUpdated()"></app-game-result>
+</ng-template>
+<ng-template #userUnknown>
+  <em>{{'userUnknown' | translate}}</em>
+</ng-template>
+
+<div class="game-entry game-entry-main" ngClass="{{game.status}}">
+  <div class="name name1" [class.winner]="isWinner(game.user1)">
+    <span *ngIf="isHighlightedUser(game.user1)" class="badge badge-pill {{cssClass(game, game.user1)}}">&nbsp;</span>
+    <a *ngIf="game.user1; else userUnknown;" routerLink="/users/{{game.user1.id}}" class="link-unstyled" ngbTooltip="Fiche joueur">
+      {{game.user1 | userName }}
+    </a>
+  </div>
+  <app-team-flag [team]="game.team1" class="hidden-xs-down"></app-team-flag>
+  <div class="score" (click)="open(resultModal)" ngbTooltip="Détails du match">
+    <span *ngIf="game.status === gameStatus.PLAYED; else notPlayed;">
+      {{game.score1 + game.prolongation1}} - {{game.score2 + game.prolongation2}}
+    </span>
+    <ng-template #notPlayed>&nbsp;</ng-template>
+  </div>
+  <app-team-flag [team]="game.team2" class="hidden-xs-down"></app-team-flag>
+  <div class="name name2" [class.winner]="isWinner(game.user2)">
+    <a *ngIf="game.user2; else userUnknown" routerLink="/users/{{game.user2.id}}" class="link-unstyled" ngbTooltip="Fiche joueur">
+      {{game.user2 | userName}}
+    </a>
+    <span *ngIf="isHighlightedUser(game.user2)" class="badge badge-pill {{cssClass(game, game.user2)}}">&nbsp;</span>
+  </div>
+</div>
+
+<div class="game-entry game-entry-details">
+  <div [ngSwitch]="game.compet" class="details">
+    {{game.compet | translate}}
+    <span *ngSwitchCase="gamecompet.CUP"> - {{game.round | cupRoundName:game.season.cup}}</span>
+    <span *ngSwitchCase="gamecompet.LEAGUE"> D{{game.round}} - J{{game.day}}</span>
+    <span *ngIf="game.date"> - {{game.date | date:'dd/MM/yy HH:mm'}}</span>
+  </div>
+</div>

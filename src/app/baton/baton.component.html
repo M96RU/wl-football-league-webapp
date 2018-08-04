@@ -1,0 +1,10 @@
+<div *ngIf="baton">
+  <h5 class="text-center">
+    <a routerLink="/users/{{baton.user.id}}" class="link-unstyled">
+      <!--app-team-flag [team]="baton.team" [size]="60"></app-team-flag-->
+      {{baton.user | userName}}
+    </a>
+  </h5>
+  <div class="h6 text-center">Série <span *ngIf="baton.lostDate === null">en cours</span> de {{baton.sinceGames}} match(s)</div>
+  <app-game-entry *ngFor="let game of games; trackBy: trackById" [game]="game"></app-game-entry>
+</div>

@@ -1,0 +1,45 @@
+<div *ngIf="currentChoice">
+
+  <div class="card mb-2">
+
+    <div class="card-header">
+      <h5 class="card-title m-0">
+        <fa name="handshake-o"></fa>
+        Draft en cours
+      </h5>
+    </div>
+
+    <div class="card-body text-center">
+      <a routerLink="/seasons/{{currentChoice.season.id}}/teams" class="link-unstyled">
+        Au tour de <strong>{{currentChoice.user.firstname}} {{currentChoice.user.lastname}}</strong>
+      </a>
+    </div>
+
+    <div class="card-body">
+      <div *ngFor="let division of divisions">
+
+        <table class="table table-sm table-hover m-0">
+          <thead>
+          <tr>
+            <th colspan="3">Division {{division}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let userSeason of userSeasonPerDivision.get(division)" [class.table-success]="currentChoice?.id === userSeason.id"
+              routerLink="/users/{{userSeason.user.id}}" role="button">
+            <th scope="row">{{userSeason.choice}}</th>
+            <td>
+              <app-team-flag *ngIf="userSeason.team; else noTeam" [team]="userSeason.team"></app-team-flag>
+              <ng-template #noTeam><fa name="question-circle-o"></fa></ng-template>
+            </td>
+            <td>{{userSeason.user.firstname}} {{userSeason.user.lastname}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>

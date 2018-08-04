@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-12 col-md-5 col-xl-3">
+    <div class="card mb-2" *ngIf="user">
+      <div class="card-body bg-faded">
+        <h4 class="card-title">
+          <fa [name]="getIconName()"></fa>
+          {{user | userName}}
+        </h4>
+        <serie-matchs [serie]="serie" [popupPlacement]="'right'" *ngIf="serie"></serie-matchs>
+        <a role="button" target="_blank" class="btn btn-secondary" href="api/games/ical?user={{user.id}}"
+           ngbPopover="Ajoutez le lien dans votre agenda (Outlook, Google, ...) pour synchroniser le calendrier des matchs" triggers="mouseenter:mouseleave">
+          <fa name="calendar-plus-o"></fa>
+          Calendrier iCal
+        </a>
+        <a class="btn btn-secondary" role="button" [routerLink]="'/comparison'" [queryParams]="{ 'user1': user.id }">
+          <fa [name]="'handshake-o'"></fa>
+          Comparer
+        </a>
+      </div>
+    </div>
+    <div *ngFor="let currentUserSeason of userSeasons; trackBy: trackBySeasonId" class="card mb-2"
+         [class.card-outline-primary]="currentUserSeason === selectedUserSeason"
+         (click)="updateSelectedUserSeason(currentUserSeason)" role="button">
+      <div >
+        <div class="card-header">
+          <h5 class="card-title m-0">{{currentUserSeason.season.label}}
+            <small *ngIf="false" class="text-muted"> - En cours</small>
+          </h5>
+        </div>
+        <div *ngIf="currentUserSeason.team" class="card-body p-2">
+          <div class="row align-items-center">
+            <div class="col-4 text-center">
+              <app-team-flag [team]="currentUserSeason.team" [size]="60"></app-team-flag>
+            </div>
+            <div class="col-4 text-center">
+              <div class="h3">
+                <rank-name [rank]="currentUserSeason.rank"></rank-name>
+              </div>
+            </div>
+            <div class="col-4 text-center">
+              <div class="h3">{{currentUserSeason | cupResult}}</div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col-4 text-center">
+              <div class="h6">
+                {{currentUserSeason.team.label}}
+              </div>
+            </div>
+            <div class="col-4 text-center">
+              <div class="h6">Division {{currentUserSeason.division}}</div>
+            </div>
+            <div class="col-4 text-center">
+              <div class="h6">
+                <fa *ngIf="currentUserSeason.cupInProgress" name="refresh" ngbTooltip="En cours"></fa>
+                <fa *ngIf="!currentUserSeason.cupInProgress" name="check" ngbTooltip="Terminé"></fa>
+                Coupe
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-7 col-xl-5" *ngIf="selectedUserSeason">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title m-0" routerLink="/seasons/{{selectedSeasonId}}/division/{{selectedUserSeason.division}}" role="button">
+          <fa name="sort-amount-desc"></fa>
+          Championnat - Division {{selectedUserSeason.division}}
+        </h5>
+      </div>
+      <division-ranking [division]="selectedUserSeason.division" [season]="selectedUserSeason.season"
+                        [userId]="user.id"></division-ranking>
+    </div>
+  </div>
+  <div class="col-12 col-md-12 col-xl-4" *ngIf="selectedUserSeason">
+    <games-planning [userId]="user.id" [seasonId]="selectedSeasonId"></games-planning>
+  </div>
+</div>

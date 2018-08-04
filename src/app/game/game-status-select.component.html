@@ -1,0 +1,4 @@
+<select class="form-control form-control-sm" [(ngModel)]="selectedStatus" (ngModelChange)="onChange()">
+  <option [ngValue]="undefined">{{'AllStatus' | translate}}</option>
+  <option *ngFor="let status of statuses" [ngValue]="status">{{status | translate}}</option>
+</select>

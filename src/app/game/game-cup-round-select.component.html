@@ -1,0 +1,4 @@
+<select class="form-control form-control-sm" [(ngModel)]="round" (ngModelChange)="onChange()">
+  <option [ngValue]="undefined">{{'AllRounds' | translate}}</option>
+  <option *ngFor="let r of roundsArray; let roundOption = index" [ngValue]="roundOption+1">{{roundOption+1 | cupRoundName:rounds}}</option>
+</select>

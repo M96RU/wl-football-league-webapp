@@ -1,0 +1,35 @@
+<div class="d-md-none d-lg-none d-xl-none">
+  <div class="card-header">
+    <game-filter class="float-right compact" [showStatusFilter]="true" [cupRounds]="season.cup" (gameFilterUpdated)="viewFilter = $event"></game-filter>
+    <h5 class="card-title m-0">
+      <fa [name]="'trophy'"></fa>
+      Coupe
+    </h5>
+  </div>
+  <div class="card-body">
+    <game-list [query]="{'season': season.id, 'compet': 'CUP'}" [viewFilter]="viewFilter"></game-list>
+  </div>
+</div>
+
+<div *ngIf="final" class="d-none d-md-block container-fluid">
+  <div class="row">
+    <div *ngFor="let round of roundsLeft" class="col">
+      <season-cup-round [left]="true" [firstDay]="1" [lastDay]="getNbSlots(round) / 2" [round]="round" [games]="games"></season-cup-round>
+    </div>
+    <div class="col-2">
+      <div class="h-25"></div>
+      <div class="h-50">
+        <season-cup-game class="w-100" [game]="final" [final]="true"></season-cup-game>
+      </div>
+      <div class="h-25">
+        <div class="align-self-center text-center font-weight-bold lead" *ngIf="final.status === gameStatus.PLAYED">
+          <div><user-link [user]="isWinner(final.user1) ? final.user1 : final.user2"></user-link></div>
+          <app-team-flag [team]="isWinner(final.user1) ? final.team1 : final.team2" [responsive]="true"></app-team-flag>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let round of roundsRight" class="col">
+      <season-cup-round [left]="false" [firstDay]="1 + getNbSlots(round) / 2" [lastDay]="getNbSlots(round)" [round]="round" [games]="games"></season-cup-round>
+    </div>
+  </div>
+</div>

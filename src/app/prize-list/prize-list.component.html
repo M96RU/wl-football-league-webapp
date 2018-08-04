@@ -1,0 +1,28 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th>Coupe</th>
+    <th *ngFor="let division of divisions">Division {{division}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let season of seasons">
+    <th scope="row" class="align-middle">
+      {{season.label}}
+    </th>
+    <td>
+      <div *ngIf="seasonsPrizes[season.id].cupWinner" role="button" routerLink="/users/{{seasonsPrizes[season.id].cupWinner.user.id}}">
+        <app-team-flag [team]="seasonsPrizes[season.id].cupWinner.team" [size]="60"></app-team-flag>
+        {{seasonsPrizes[season.id].cupWinner.user | userName}}
+      </div>
+    </td>
+    <td *ngFor="let division of divisions">
+      <div *ngIf="seasonsPrizes[season.id].divisionWinners[division]" role="button" routerLink="/users/{{seasonsPrizes[season.id].divisionWinners[division].user.id}}">
+        <app-team-flag [team]="seasonsPrizes[season.id].divisionWinners[division].team" [size]="60"></app-team-flag>
+        {{seasonsPrizes[season.id].divisionWinners[division].user | userName}}
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>

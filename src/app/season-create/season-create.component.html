@@ -1,0 +1,75 @@
+<div>
+  <input [ngModel]="labelInit" #change>
+  <button type="button" class="btn btn-primary" (click)="createSeason(change.value)">Valider</button>
+
+  <div class="row mt-1">
+    <div *ngFor="let division of divisions" class="col-12 col-lg-6 col-xl-4">
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title m-0">Division {{division}}</h5>
+        </div>
+        <div class="card-body p-0">
+          <table>
+            <thead>
+            <tr>
+              <th *ngIf="division > 1"></th>
+              <th>#</th>
+              <th>Nom</th>
+              <th>Saison</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let userEntry of usersPerDivision.get(division)" [class.table-danger]="userEntry.division > userEntry.previousDivision" [class.table-success]="userEntry.division < userEntry.previousDivision">
+              <td *ngIf="division > 1">
+                <fa name="arrow-left" (click)="promote(userEntry)"></fa>
+              </td>
+              <td scope="row">
+                {{userEntry.choice}}
+              </td>
+              <td>
+                <fa name="arrow-up" (click)="choiceUp(userEntry)"></fa>
+                <fa name="arrow-down" (click)="choiceDown(userEntry)"></fa>
+                <strong>{{userEntry.user.firstname}} {{userEntry.user.lastname}}</strong>
+              </td>
+              <td scope="row">
+                <span *ngIf="userEntry.rank > 0; else newEntry">{{userEntry.rank}} ({{userEntry.points}} pts, {{userEntry.goalAverage}})</span>
+                <ng-template #newEntry>Nouveau joueur</ng-template>
+              </td>
+              <td>
+                <fa name="remove" (click)="fold(userEntry)"></fa>
+                <fa name="arrow-right" (click)="relegate(userEntry)"></fa>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-12 col-md-3">
+      <div class="card-header">
+        <h5 class="card-title m-0">Nouveau joueur</h5>
+        <user-create (userCreate)="handleUserCreate($event)"></user-create>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-9">
+      <div class="card-header">
+        <h5 class="card-title m-0">Joueurs disponibles</h5>
+        <button *ngFor="let user of availableUsers" type="button" class="btn btn-primary m-1" (click)="select(user)">
+          <fa name="plus"></fa>
+          {{user.firstname}} {{user.lastname}}
+          <fa name="plus"></fa>
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>

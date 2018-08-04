@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-6">
+    <h6 class="mb-0">Classement attaque</h6>
+    <div class="text-muted mb-1">Buts par match</div>
+    <div *ngFor="let stat of attack | slice:0:3">
+      <fa name="arrow-up" class="text-success"></fa>{{stat.userId | idToUser | async | userName}} ({{stat.scoreForPerGame}})
+    </div>
+    <div class="mb-2"></div>
+    <div *ngFor="let stat of attack | slice:-3">
+      <fa name="arrow-down" class="text-danger"></fa>{{stat.userId | idToUser | async | userName}} ({{stat.scoreForPerGame}})
+    </div>
+  </div>
+
+  <div class="col-6">
+    <h6 class="mb-0">Classement défense</h6>
+    <div class="text-muted mb-1">Buts par match</div>
+    <div *ngFor="let stat of defense | slice:0:3">
+      <fa name="arrow-up" class="text-success"></fa>{{stat.userId | idToUser | async | userName}} ({{stat.scoreAgainstPerGame}})
+    </div>
+    <div class="mb-2"></div>
+    <div *ngFor="let stat of defense | slice:-3">
+      <fa name="arrow-down" class="text-danger"></fa>{{stat.userId | idToUser | async | userName}} ({{stat.scoreAgainstPerGame}})
+    </div>
+  </div>
+
+</div>

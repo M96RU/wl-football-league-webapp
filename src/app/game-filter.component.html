@@ -1,0 +1,6 @@
+<form class="form-inline">
+  <game-cup-round-select *ngIf="cupRounds" [(round)]="gameFilter.cupRound" [rounds]="cupRounds" (roundChange)="updateGameFilter()"></game-cup-round-select>
+  <user-select *ngIf="users" (userChange)="gameFilter.user = $event?.id; updateGameFilter()" [users]="users"></user-select>
+  <game-status-select [selectedStatus]="gameFilter.status" *ngIf="showStatusFilter" (statusChanged)="gameFilter.status = $event; updateGameFilter()"></game-status-select>
+  <game-compet-select [selectedCompet]="gameFilter.compet" *ngIf="showCompetFilter" (competChanged)="gameFilter.compet = $event; updateGameFilter()"></game-compet-select>
+</form>

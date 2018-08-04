@@ -1,0 +1,42 @@
+.game-date {
+  justify-content: center;
+}
+
+.name {
+  flex: 1;
+}
+
+.name1 {
+  text-align: right;
+}
+
+.name2 {
+  text-align: left;
+}
+
+.resultRow {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.middle {
+  flex: 0 0 100px;
+  text-align: center;
+}
+
+.user1, .user2 {
+  flex: 1;
+  > input {
+    width: 5em;
+  }
+}
+
+.user1 {
+  text-align: right;
+
+  > input {
+    float: right !important;
+  }
+}

@@ -1,0 +1,29 @@
+<div *ngIf="formTeamSeason" class="text-center">
+  <app-team-flag [team]="formTeamSeason.team" [size]="60"></app-team-flag>
+
+  <div class="input-group">
+    <span class="input-group-addon col-lg-4">Division</span>
+    <input [(ngModel)]="formTeamSeason.division" type="number" class="form-control" [formControl]="teamSeasonCreateForm.controls['division']"/>
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-addon col-lg-4">Attaque</span>
+    <input [(ngModel)]="formTeamSeason.attack" type="number" class="form-control" [formControl]="teamSeasonCreateForm.controls['attack']"/>
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-addon col-lg-4">Milieu</span>
+    <input [(ngModel)]="formTeamSeason.midfield" type="number" class="form-control" [formControl]="teamSeasonCreateForm.controls['midfield']"/>
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-addon col-lg-4">Défense</span>
+    <input [(ngModel)]="formTeamSeason.defence" type="number" class="form-control" [formControl]="teamSeasonCreateForm.controls['defence']"/>
+  </div>
+
+  <div class="btn-group" data-toggle="buttons">
+    <button type="button" class="btn btn-danger" (click)="cancel()">Annuler</button>
+    <button type="button" class="btn btn-success" (click)="save()">Valider</button>
+  </div>
+
+</div>

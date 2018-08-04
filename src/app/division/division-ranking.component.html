@@ -1,0 +1,33 @@
+<table *ngIf="userSeasons" class="table table-sm table-hover m-0">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Nom</th>
+    <th>Pts</th>
+    <th>J.</th>
+    <th>G.</th>
+    <th>N.</th>
+    <th>P.</th>
+    <th>p.</th>
+    <th>c.</th>
+    <th>Diff</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let userSeason of userSeasons; trackBy: trackById" [class.table-success]="userId === userSeason.user.id" routerLink="/users/{{userSeason.user.id}}" role="button">
+    <th scope="row">{{userSeason.rank}}</th>
+    <td>
+      <app-team-flag [team]="userSeason.team"></app-team-flag>
+      {{userSeason.user | userName }}
+    </td>
+    <td><strong>{{userSeason.points}}</strong></td>
+    <td>{{userSeason.played}}</td>
+    <td>{{userSeason.won}}</td>
+    <td>{{userSeason.draw}}</td>
+    <td>{{userSeason.lose}}</td>
+    <td>{{userSeason.goalFor}}</td>
+    <td>{{userSeason.goalAgainst}}</td>
+    <td>{{userSeason.goalAverage}}</td>
+  </tr>
+  </tbody>
+</table>

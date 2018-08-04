@@ -1,0 +1,27 @@
+<div *ngIf="series">
+  <table class="table table-sm table-hover m-0">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Nom</th>
+      <th>Pts</th>
+      <th>Diff</th>
+      <th>Matchs</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let serie of series; let rank = index; trackBy: trackByUserId" routerLink="/users/{{serie.user.id}}" role="button">
+      <th scope="row">{{rank + 1}}</th>
+      <td>
+        <app-team-flag [team]="serie.team"></app-team-flag>
+        {{serie.user | userName }}
+      </td>
+      <td><strong>{{serie.points}}</strong></td>
+      <td>{{serie.goalAverage}}</td>
+      <td>
+        <serie-matchs [serie]="serie"></serie-matchs>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

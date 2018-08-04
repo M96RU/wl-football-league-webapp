@@ -1,0 +1,7 @@
+<div *ngFor="let serieMatch of serie.matches" [ngbPopover]="popContent" [placement]="popupPlacement" triggers="mouseenter:mouseleave"
+     class="mr-1 badge badge-pill {{cssClass(serieMatch.match, serie.user)}}">
+  {{serieMatch.points}}
+  <ng-template #popContent>
+      <app-game-entry [game]="serieMatch.match" [highlightedUserId]="serie.user.id"></app-game-entry>
+  </ng-template>
+</div>

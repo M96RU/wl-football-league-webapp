@@ -1,0 +1,9 @@
+{
+  "CUP": "Cup",
+  "LEAGUE": "Championship",
+  "PLAYED": "Played",
+  "INIT": "Not scheduled",
+  "PLANNED": "Scheduled",
+  "ALL": "All",
+  "AllStatus" : "All status"
+}

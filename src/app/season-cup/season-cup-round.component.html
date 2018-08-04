@@ -1,0 +1,26 @@
+<div class="row" *ngIf="firstDay === lastDay" [ngClass]="left ? 'left' : 'right'" [class.flex-row-reverse]="left" [class.h-100]="round>1">
+
+  <div class="col first" [ngClass]="getWinnerClass()" style="min-width: 20%">
+    <div class="h-25"></div>
+    <div class="h-25 row">
+      <div class="h-100 w-50 upLeft"></div>
+      <div class="h-100 w-50 upRight"></div>
+    </div>
+    <div class="h-25 row">
+      <div class="h-100 w-50 downLeft"></div>
+      <div class="h-100 w-50 downRight"></div>
+    </div>
+    <div class="h-25"></div>
+  </div>
+
+  <div class="col second" style="min-width: 80%">
+    <season-cup-game [round]="round" [day]="firstDay" [game]="game"></season-cup-game>
+  </div>
+</div>
+
+<div *ngIf="firstDay<lastDay" class="h-50">
+  <season-cup-round [left]="left" [round]="round" [games]="games" [firstDay]="firstDay" [lastDay]="(lastDay+firstDay-1)/2"></season-cup-round>
+</div>
+<div *ngIf="firstDay<lastDay" class="h-50">
+  <season-cup-round [left]="left" [round]="round" [games]="games" [firstDay]="1+(lastDay+firstDay-1)/2" [lastDay]="lastDay"></season-cup-round>
+</div>

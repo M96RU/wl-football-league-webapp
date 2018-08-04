@@ -1,0 +1,37 @@
+<div *ngIf="season">
+  <div class="row mt-1">
+    <div *ngFor="let division of divisions" class="col-12 col-lg-6 col-xl-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title m-0" routerLink="./division/{{division}}" role="button"><fa [name]="'sort-amount-desc'"></fa>Division {{division}}</h5>
+        </div>
+        <div class="card-body p-0">
+          <division-ranking [division]="division" [season]="season"></division-ranking>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-1">
+    <div class="col-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <game-filter class="float-right compact" [showStatusFilter]="true" [cupRounds]="season.cup" [users]="cupGames | gameUserList" (gameFilterUpdated)="viewFilter = $event"></game-filter>
+          <h5 class="card-title m-0">Coupe</h5>
+        </div>
+        <div class="card-body">
+          <game-list [query]="{'season': season.id, 'compet': 'CUP'}" [viewFilter]="viewFilter" (gamesUpdated)="cupGames = $event"></game-list>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-xl-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title m-0"><fa name="bar-chart"></fa>Statistiques</h5>
+        </div>
+        <div class="card-body">
+          <app-stats [gameFilter]="seasonStatsFilter"></app-stats>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div ngbDropdown class="d-inline-block">
+  <button class="btn btn-outline-primary" id="seasonsDropdown" ngbDropdownToggle>{{season?.label}}</button>
+  <div ngbDropdownMenu aria-labelledby="seasonsDropdown">
+    <button *ngFor="let seasonItem of seasons" class="dropdown-item" [routerLink]="computeRouterLink(seasonItem.id)">{{seasonItem.label}}</button>
+  </div>
+</div>
+<div class="d-inline-block" *ngIf="season?.id  && authenticatedUser?.admin">
+  <a routerLink="/seasons/{{season?.id}}/create" class="btn btn-outline-primary">Nouvelle Saison</a>
+</div>
+<router-outlet></router-outlet>

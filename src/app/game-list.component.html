@@ -1,0 +1,8 @@
+<div *ngIf="games">
+  <game-filter (gameFilterUpdated)="viewFilter = $event; refreshFilteredGames()"></game-filter>
+  <div *ngIf="emptyText && filteredGames && filteredGames.length == 0" class="text-center">
+    <em>{{emptyText}}</em>
+  </div>
+  <app-game-entry *ngFor="let game of filteredGames; trackBy: trackById" [game]="game" [highlightedUserId]="highlightedUserId">
+  </app-game-entry>
+</div>

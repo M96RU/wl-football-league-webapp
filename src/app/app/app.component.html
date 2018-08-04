@@ -1,0 +1,73 @@
+<ng-template ngbModalContainer></ng-template>
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <button class="navbar-toggler navbar-toggler-right" type="button" (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active"><fa [name]="'futbol-o'"></fa> Tournoi FIFA</a>
+    <div class="collapse navbar-collapse" id="navbarNav" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">Tableau de bord</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/seasons/current/teams" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Equipes</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/seasons" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Championnat</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/cup" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Coupe</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/calendar" routerLinkActive="active" class="nav-link">Calendrier</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/prizeList" routerLinkActive="active" class="nav-link">Palmarès</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/batons" routerLinkActive="active" class="nav-link">Batons</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/comparison" [queryParams]="{ user1: authenticatedUser?.id || '', user2: '' }" routerLinkActive="active" class="nav-link">Comparaison</a>
+        </li>
+      </ul>
+      <ul *ngIf="authenticatedUser" class="navbar-nav">
+        <div class="nav-item" *ngIf="authenticatedUser.admin">
+          <user-select [user]="currentUser" [users]="userService.getUsers() | async" [showAllUsers]="false" (userChange)="updateCurrentUser($event)" ></user-select>
+        </div>
+        <div class="nav-item" *ngIf="devMode">
+            <div class="form-check mt-1">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="authenticatedUser.admin" (ngModelChange)="adminUpdated()"/>
+                Vue admin
+              </label>
+            </div>
+        </div>
+        <li class="nav-item">
+          <a routerLink="/users/{{authenticatedUser.id}}" routerLinkActive="active" class="nav-link">Mon tableau de bord</a>
+        </li>
+        <li class="nav-item">
+          <a role="button" class="nav-link" (click)="logout()">Déconnexion</a>
+        </li>
+      </ul>
+      <ul *ngIf="!authenticatedUser" class="navbar-nav">
+        <li class="nav-item" *ngIf="loginUrl">
+          <a href="{{loginUrl}}" class="nav-link">Connexion</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <simple-notifications [options]="notifOptions"></simple-notifications>
+
+  <div *ngIf="impersonate" class="alert alert-danger" role="alert">
+    <div class="text-center h6">
+      Impersonation de {{currentUser | userName}} <fa name="times" (click)="authenticationService.currentUser.next(authenticatedUser)"></fa>
+    </div>
+  </div>
+
+  <div class="mt-1">
+    <router-outlet></router-outlet>
+  </div>
+</div>
